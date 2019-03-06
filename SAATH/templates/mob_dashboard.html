@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+	<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+
+	<script type="text/javascript">
+		function updateScroll(){
+    		var element = document.getElementById("all_don_req");
+    		element.scrollTop = element.scrollHeight;
+		}
+		</script>
+
+
+		<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+		<script>
+  		// Initialize Firebase
+  		var config = {
+    	apiKey: "AIzaSyBypGEylbI-CmyR6VWObQdtwwX-epET0A4",
+    	authDomain: "saath-ee442.firebaseapp.com",
+    	databaseURL: "https://saath-ee442.firebaseio.com",
+    	projectId: "saath-ee442",
+    	storageBucket: "gs://saath-ee442.appspot.com",
+   		messagingSenderId: "964798793282"
+  	};
+  	firebase.initializeApp(config);
+
+  	var database = firebase.database();
+
+
+
+	window.onload = function(){
+	//have to make it grouped .. so getting email-msg combination is imp..
+	var messageRef = database.ref('/don_mob_db');
+	//var hr = document.createElement("<hr>");
+	var i=1;
+	
+	messageRef.on('child_added', function(snapshot)
+	{
+      //Do something with the data
+      	var temp1,temp2,temp3,temp4
+      	snapshot.forEach(function(childSnapshot) {
+      	var childData = childSnapshot.val();
+  		var div1 = document.createElement('div');
+      	var div2 = document.createElement('div');
+      	var div3 = document.createElement('div');
+      	var div4 = document.createElement('div');
+      	var add = document.createElement('div');
+
+	  	if(i%4==1){
+
+	  		temp1=childData;
+	  		//div1.textContent="Address: "+childData;
+	  		//temp1.style.padding="20px"
+	  		//temp4=childData;
+	  		// add.textContent="Address: "+childData;
+	  		//add.style.padding="20px";
+	  		//add.style.color="green";;
+	  		//temp1.style.color="red";
+	  		//document.getElementById("all_don_req").appendChild(div1);	
+	  	}
+
+	  	if(i%4==2){
+	  		temp2=childData;
+	  		// div2.textContent="quantity: "+childData;
+	  		//div2.style.padding="20px";
+	  		//temp2.style.color="green";
+	  		//document.getElementById("all_don_req").appendChild(div2);	
+	  		  		
+	  	}
+
+		if(i%4==3){
+			temp3=childData;
+	  		//div3.textContent="Type of Donation: "+childData;
+	  		//div3.style.padding="20px";
+	  		//temp3.style.color="green";
+	  		//document.getElementById("all_don_req").appendChild(div3);
+
+	  		
+	  	}
+
+	  	if(i%4==0){
+	  		temp4=childData;
+	  		// add.textContent="Address: "+childData;
+	  		//add.style.padding="20px";
+	  		//add.style.color="green";
+	  		//document.getElementById("all_don_req").appendChild(add);
+	  		div1.textContent="e-mail: "+temp2;
+	  		div2.textContent="type of donation: "+temp4;
+	  		div3.textContent="quantity: "+temp3;
+	  		add.textContent="address: "+temp1;
+	  		div4.appendChild(div1);
+	  		div4.appendChild(div2);
+	  		div4.appendChild(div3);
+	  		div4.appendChild(add);
+	  		var btn=document.createElement('input')
+	  		btn.type="button";
+	  		btn.value="ACCEPT";
+	  		btn.setAttribute("id",temp2);
+	  		btn.onclick=function(){
+	  			this.disabled="false";
+	  			confirm_fun(this.id,temp4,temp3,temp1);
+	  		}
+	  		div4.appendChild(btn);
+	  		var btn1=document.createElement('input')
+	  		btn1.type="button";
+	  		btn1.value="LOCATE DONATOR ON MAP";
+	  		btn1.name="address"
+	  		btn1.setAttribute("id",temp1);
+	  		btn1.onclick=function(){
+	  			//this.disabled="false"
+	  			locate_don(this.id);
+	  		}
+	  		div4.appendChild(btn1);
+	  		div4.style.borderBottom = "2px solid black";
+	  		document.getElementById("all_don_req").appendChild(div4);
+
+	  	}
+		
+		i=i+1;
+	  	updateScroll();
+  	});
+
+	  
+	  		
+	  		
+ });
+
+	
+
+
+}
+
+
+function confirm_fun(email_id, type, quantity, address) {
+	var con = confirm("CONFIRM PICKUP?");
+	if(con == true){
+		//window.location.replace("http://192.168.43.198:8000/getadd");
+		//var address = {% for key in result %}{{key[0]}}{% endfor %};
+		var rider_email = document.getElementById("user_email").innerHTML;
+		firebase.database().ref('/delivery').push({
+			donator: email_id,
+			mobile: rider_email,
+			type: type,
+			quantity: quantity,
+			address: address
+		});
+
+	}
+	
+	else{
+		
+	}
+}
+
+function locate_don(address){
+	//alert(address)
+	var frm=document.createElement("form");
+	frm.action="http://192.168.43.198:8000/locate_don";
+	frm.method="POST"
+	var ele = document.createElement("input");
+	ele.value=address;
+	//alert(ele.value)
+	ele.name="address"
+	frm.appendChild(ele)
+	document.body.appendChild(frm);
+	frm.submit();
+}
+
+
+
+
+</script>
+
+<script type="text/javascript">
+	function mob_go_contact(){
+		window.location.replace("http://192.168.43.167:8000/contact");
+	}
+</script>
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		function mob_go_profile() {
+			// body...
+			myFunction();
+		}
+		function mob_go_contri() {
+			// body...
+			window.location.replace("http://192.168.43.198:8000/mob_contri")
+		}
+		function mob_go_find_don() {
+		  	window.location.replace("http://192.168.43.198:8000/mob_find_don")
+		}
+		function mob_go_find_ngo() {
+		  	window.location.replace("http://192.168.43.198:8000/mob_find_ngo")
+		}
+		function mob_go_chat() {
+			// body...
+			window.location.replace("http://192.168.43.198:8000/chat")
+		}
+		function mob_go_contact() {
+			// body...
+			window.location.replace("http://192.168.43.198:8000/contact_us")
+		}
+
+	</script>
+
+	
+	<style type="text/css">
+		.top_menus{
+			margin-top: 10px;
+			height: 50px;
+			font-size: 25px;
+			width: 100%;
+		}
+
+		.top_menus_table{
+			width: 100%;
+			border: 4px solid black;
+			/*padding: 5px;*/
+			border-radius: 25%;
+		}
+
+		#all_don_req{
+			width: 90%;
+			margin-top: 50px;
+			border: 2px solid black;
+			color: black;
+			border-radius: 10px;
+			text-align: left;
+			padding: 10px;
+			margin-left: 50px;
+
+		}
+
+		th{
+			padding: 15px 25px;
+		   	font-size: 24px;
+  			text-align: center;
+  			cursor: pointer;
+  			outline: none;
+  			color: #fff;
+  			background-color: #4CAF50;
+  			border: none;
+  			border-radius: 15px;
+  			box-shadow: 0 9px #999;
+  			width: 10%;
+		}
+
+		th:hover{
+			background-color: #3e8e41
+		}
+
+		th:active{
+			background-color: #3e8e41;
+  			box-shadow: 0 5px #666;
+  			transform: translateY(4px);	
+		}
+
+		.user_info_area{
+			color: white;
+
+		}
+
+		a{
+			color: black;
+		}
+
+		a:hover{
+			color: red;
+		}
+
+		#user_image{
+			border-radius: 50%;
+			margin-left: 80px;
+			height: 100px;
+			width: 100px;
+			border: 1px solid black;
+			margin-left: 0px;
+		}
+
+		.column1{
+			margin-top: 50px;
+			width: 20%;
+			height: 100%;
+			background-color: #dddddd;
+			float: left;
+		}
+
+
+
+		#col1_settings{
+			float: left;
+			border: 1px solid black;
+			color: black;
+		}
+
+		#col1_logout{
+			float: right;
+			border: 1px solid black;
+			color: black;
+		}
+
+
+
+
+
+
+	.dropbtn {
+    	background-color:  #4CAF50;
+    	color: white;
+    	padding: 16px;
+    	font-size: 16px;
+    	border: none;
+    	cursor: pointer;
+	}
+
+	.dropbtn:hover,  {
+	    background-color: #3e8e41;
+	}
+
+	.dropbtn:active{
+			background-color: #3e8e41;
+	}
+
+	.dropdown {
+    	position: relative;
+    	display: inline-block;
+    	width: 250px;
+	}
+
+	.dropdown-content {
+    	display: none;
+    	position: absolute;
+    	background-color: #f1f1f1;
+    	min-width: 160px;
+    	overflow: auto;
+    	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    	z-index: 1;
+    	/*width: 100%;*/
+	}
+
+	.dropdown-content a {
+    	color: black;
+    	padding: 12px 16px;
+    	text-decoration: none;
+    	display: block;
+	}
+
+	.dropdown a:hover {background-color: #ddd;}
+
+	.show {display: block;}	
+		/*.vert_line{
+			border-left: 5px solid black;
+			height: 500px;
+			margin-left: 275px;
+			margin-top: 5px;
+		}*/
+
+		.horz_line{
+			border-top: 5px solid black;
+			margin-top: 50px;
+			width: 100%;
+		}
+
+		.top_img{
+			border-radius: 10%;
+		}
+
+	</style>
+	<title>Home_Page</title>
+</head>
+<body>
+	<div class="top_img"><img src="/static/banner.jpg" height="200px" width="100%"></div>
+
+	<div class="top_menus">
+		<table id="top_menus_table">
+			<tr>
+				<th name="profile" id="profile" class="dropbtn" onclick="myFunction()">
+					<div class="dropdown">
+						<!-- <button onclick="myFunction()" class="dropbtn">Profile</button> -->
+  						<div id="myDropdown" style="width: 200%" class="dropdown-content">
+    					<a href="#home"><p style="left: 10px;">WELCOME: 
+							<span id="user_email">
+							{% for key in result %}
+							{{ key }}
+							{% endfor %}
+							</span>
+							</p></a>
+    					<a href="#about"><img align="center" id="user_image" src="/static/user-image.jpg"></a>
+    					<a href="#Settings">Go to Settings</a>
+    					<br>
+    					<a href="http://192.168.43.198:8000/tologin">Logout</a>
+    				</div>
+				</div>
+					Profile
+				</th>
+				<th name="contributions" id="contributions" onclick="mob_go_contri()">My Contributions</th>
+				<th name="don_around" id="don_around" onclick="mob_go_find_don()">Find Donators</th>
+				<th name="ngo_around" id="ngo_around" onclick="mob_go_find_ngo()">Find NGOs</th>
+				<th name="chat" id="chat" onclick="mob_go_chat()">Chat</th>
+				<th name="contact_us" id="contact_us" onclick="mob_go_contact()">Contact Us</th>
+				
+			</tr>
+		</table>
+	</div>
+
+
+
+
+
+</style>
+</head>
+<body>
+
+<div class="horz_line"></div>
+	<div class="columns">
+	
+
+
+		<div align="center"><h3>DONATORS HAVE PLACED THESE PICKUP REQUETS..</h3></div>
+		<div id="all_don_req" style="overflow-y: scroll; height: 600px; ">
+		
+	</div>
+</body>
+</html>

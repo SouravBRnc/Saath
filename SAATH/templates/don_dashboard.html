@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+
+
+	<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+
+	<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+		<script>
+  	// Initialize Firebase
+  		var config = {
+    	apiKey: "AIzaSyBypGEylbI-CmyR6VWObQdtwwX-epET0A4",
+    	authDomain: "saath-ee442.firebaseapp.com",
+    	databaseURL: "https://saath-ee442.firebaseio.com",
+    	projectId: "saath-ee442",
+    	storageBucket: "gs://saath-ee442.appspot.com",
+   		messagingSenderId: "964798793282"
+  	};
+  	firebase.initializeApp(config);
+
+  	var database = firebase.database();
+
+  	function send(){
+  	var type= document.getElementById("type").value;
+  	var qty = document.getElementById("qty").value;
+  	var add = document.getElementById("don_address").innerHTML;
+  	if(qty==""||qty<=0){
+  		alert("INVALID REQUEST..!!");
+  		return;
+  	}
+  	var email = document.getElementById("user_email").innerHTML; 
+  	// document.getElementById("user_email").value;
+  	writeUserData(email,type,qty,add)
+  }
+
+  function writeUserData(email, type, qty, add) {
+  firebase.database().ref('/don_mob_db').push({
+    email: email,
+    type: type,
+    quantity: qty,
+    address: add
+    });
+
+  alert("Your Request has been placed successfully.. Thank You!")
+}
+
+
+</script>
+
+
+
+	<script type="text/javascript">
+		
+		function don_go_contri(){
+			window.location.replace("http://192.168.43.198:8000/my_contrib")
+		}
+		function don_go_profile() {
+			// body...
+			window.location.replace("http://192.168.43.198:8000/don_profile")
+		}
+		
+		function don_go_chat() {
+			alert(document.getElementById("don_address").value);
+			// body...
+			window.location.replace("http://192.168.43.198:8000/chat")
+		}
+		function don_go_contact() {
+			// body...
+			window.location.replace("http://192.168.43.198:8000/contact")
+		}
+
+	</script>
+
+
+
+	
+	<style type="text/css">
+		.top_menus{
+			margin-top: 10px;
+			height: 50px;
+			font-size: 25px;
+			width: 100%;
+		}
+
+		.top_menus_table{
+			width: 100%;
+			border: 4px solid black;
+			/*padding: 5px;*/
+			border-radius: 25%;
+		}
+
+		th{
+			padding: 15px 25px;
+		   	font-size: 24px;
+  			text-align: center;
+  			cursor: pointer;
+  			outline: none;
+  			color: #fff;
+  			background-color: #4CAF50;
+  			border: none;
+  			border-radius: 15px;
+  			box-shadow: 0 9px #999;
+  			width: 10%;
+		}
+
+		th:hover{
+			background-color: #3e8e41
+		}
+
+		th:active{
+			background-color: #3e8e41;
+  			box-shadow: 0 5px #666;
+  			transform: translateY(4px);	
+		}
+
+		.user_info_area{
+			color: white;
+
+		}
+
+		a{
+			color: black;
+		}
+
+		a:hover{
+			color: red;
+		}
+
+		#user_image{
+			border-radius: 50%;
+			margin-left: 80px;
+			height: 100px;
+			width: 100px;
+			border: 1px solid black;
+			margin-left: 0px;
+		}
+
+		.column1{
+			margin-top: 50px;
+			width: 20%;
+			height: 100%;
+			background-color: #dddddd;
+			float: left;
+		}
+
+
+		.column2{
+			margin-top: 50px;
+			width: 65%;
+			height: 100%;
+			margin-left: 250px;
+		}
+
+		#col1_settings{
+			float: left;
+			border: 1px solid black;
+			color: black;
+		}
+
+
+		.dropbtn {
+    	background-color:  #4CAF50;
+    	color: white;
+    	padding: 16px;
+    	font-size: 16px;
+    	border: none;
+    	cursor: pointer;
+	}
+
+	.dropbtn:hover,  {
+	    background-color: #3e8e41;
+	}
+
+	.dropbtn:active{
+			background-color: #3e8e41;
+	}
+
+	.dropdown {
+    	position: relative;
+    	display: inline-block;
+    	width: 250px;
+	}
+
+	.dropdown-content {
+    	display: none;
+    	position: absolute;
+    	background-color: #f1f1f1;
+    	min-width: 160px;
+    	overflow: auto;
+    	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    	z-index: 1;
+    	/*width: 100%;*/
+	}
+
+	.dropdown-content a {
+    	color: black;
+    	padding: 12px 16px;
+    	text-decoration: none;
+    	display: block;
+	}
+
+	.dropdown a:hover {background-color: #ddd;}
+
+	.show {display: block;}	
+
+		#col1_logout{
+			float: right;
+			border: 1px solid black;
+			color: black;
+		}
+
+		.vert_line{
+			border-left: 5px solid black;
+			height: 500px;
+			margin-left: 275px;
+			margin-top: 5px;
+		}
+
+		.horz_line{
+			border-top: 5px solid black;
+			margin-top: 50px;
+			width: 100%;
+		}
+
+		.top_img{
+			border-radius: 10%;
+		}
+
+	</style>
+	<title>Home_Page</title>
+</head>
+<body>
+	<div class="top_img"><img src="/static/banner.jpg" height="200px" width="100%"></div>
+
+	<div class="top_menus">
+		<table id="top_menus_table">
+			<tr>
+				<th name="profile" id="profile" class="dropbtn" onclick="myFunction()">
+					<div class="dropdown">
+						<!-- <button onclick="myFunction()" class="dropbtn">Profile</button> -->
+  						<div id="myDropdown" style="width: 200%" class="dropdown-content">
+    					<a href="#home"><p style="left: 10px;">WELCOME: 
+							<span id="user_email">
+							{% for key in result %}
+							{{ key }}
+							{% endfor %}
+							</span>
+							<span id="don_address" style="display: none">
+								{% for key in address %}
+								{{ key }}
+								{% endfor %}
+							</span>
+							</p></a>
+    					<a href="#about"><img align="center" id="user_image" src="/static/user-image.jpg"></a>
+    					<a href="#Settings">Go to Settings</a>
+    					<br>
+    					<a href="http://192.168.43.198:8000/tologin">Logout</a>
+    				</div>
+				</div>
+					<center>Profile</center>
+				</th>
+				<th name="contributions" id="contributions" onclick="don_go_contri()">My Contributions</th>
+				<!-- <th name="don_donate" id="don_donate" onclick="don_go_donate()">Donate</th> -->
+				<th name="chat" id="chat" onclick="don_go_chat()">Chat</th>
+				<th name="contact_us" id="contact_us" onclick="don_go_contact()">Contact Us</th>
+			</tr>
+		</table>
+	</div>
+	<div class="horz_line"></div>
+	<div class="columns">
+		
+		<div class="column2">
+			<center>
+				<form id="form_id" style="width: 50%; background-color: powderblue;">
+		<fieldset>
+			<legend>DONATION INFORMATION</legend>
+			Type: <select name="type" id="type">
+				<option name="type_food" value="food" selected>FOOD</option>
+				<option name="type_cloth" value="clothes">CLOTHES</option>
+				<option name="type_toys" value="toys">TOYS</option>
+			</select>
+			<br>
+			<br>
+			<input type="text" name="qty" id="qty" placeholder="approximate guess of the quantity..">
+			<br>
+			<br>
+			<button type="button" onclick="send()"	>SEND A PICKUP REQUEST</button>
+			</fieldset>
+		</form>
+	</center>
+	</div>
+	</div>
+</body>
+</html>

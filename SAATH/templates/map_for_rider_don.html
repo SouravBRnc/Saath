@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>multiple locations</title>
+    <style type="text/css">
+   
+    html, body, #map_canvas {
+    height: 500px;
+    width: 500px;
+    margin: 0px;
+    padding: 0px
+}
+    </style>
+</head>
+<body>
+   
+<!--     {% for i in data %}
+    {{i[0]}}<br>
+    {% endfor %}  -->
+
+    <label id="show"></label>
+    <div id="map_canvas" style="width:1340px; height:500px; border: 2px solid #3872ac;padding: 5px;"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <script type="text/javascript">
+       
+
+        /*
+            var locations = [
+            ['Location 1 Name', 'New York, NY', 'Location 1 URL'],
+            ['Location 2 Name', 'Newark, NJ', 'Location 2 URL'],
+            ['Location 3 Name', 'Philadelphia, PA', 'Location 3 URL']
+        ];
+        */
+
+            // var locations = [
+         //    ['Location 1 Name', 'orion mall, Bangalore', 'Location 1 URL'],
+         //    ['Location 2 Name', 'iskon, Bangalore', 'Location 2 URL'],
+         //    ['Location 3 Name', 'IISC, Bangalore', 'Location 3 URL']];
+
+        var loc={{data|tojson}};
+        //alert(loc[0][0]+loc[0][1]);
+        var locations=new Array();
+        for(var i=0;i<loc.length;i++)
+        {
+            
+            locations[i]=loc[i];
+        }
+
+        var geocoder;
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+
+        function initialize() {
+            map = new google.maps.Map(
+            document.getElementById("map_canvas"), {
+                //center: new google.maps.LatLng(37.4419, -122.1419),
+                center: new google.maps.LatLng(12.936002799, 77.5332684),
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            geocoder = new google.maps.Geocoder();
+
+            for (i = 0; i < locations.length; i++) {
+
+
+                geocodeAddress(locations, i);
+            }
+        }
+        google.maps.event.addDomListener(window, "load", initialize);
+
+        function geocodeAddress(locations, i) {
+            var title = locations[i][0];
+            var address = locations[i][1];
+            var url = locations[i][2];
+            // var title = locations[i];
+            // var address = locations[i];
+            // var url = locations[i];
+            geocoder.geocode({
+                 'address': locations[i][1]
+                //'address': locations[i]
+            },
+
+            function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var marker = new google.maps.Marker({
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+                        map: map,
+                        position: results[0].geometry.location,
+                        title: title,
+                        animation: google.maps.Animation.DROP,
+                        address: address,
+                        url: url
+                    })
+                    infoWindow(marker, map, title, address, url);
+                    //infoWindow(marker, map, address);
+                    bounds.extend(marker.getPosition());
+                    map.fitBounds(bounds);
+                } else {
+                    alert("geocode of " + address + " failed:" + status);
+                }
+            });
+        }
+
+        function infoWindow(marker, map, title, address, url) {
+            google.maps.event.addListener(marker, 'click', function () {
+                var html = "<div><h3> location: " + address + "</h3></div>";
+                iw = new google.maps.InfoWindow({
+                    content: html,
+                    maxWidth: 350
+                });
+                iw.open(map, marker);
+            });
+        }
+
+        function createMarker(results) {
+            var marker = new google.maps.Marker({
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+                map: map,
+                position: results[0].geometry.location,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                address: address,
+                url: url
+            })
+            bounds.extend(marker.getPosition());
+            map.fitBounds(bounds);
+            //infoWindow(marker, map, address);
+            infoWindow(marker, map, title, address, url);
+            return marker;
+        }
+</script>
+
+</body>
+</html>

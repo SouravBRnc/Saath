@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <script type="text/javascript">
+        function updateScroll(){
+            var element = document.getElementById("alltext");
+            element.scrollTop = element.scrollHeight;
+        }
+    </script>
+<script>
+    setTimeout(function(){
+        document.getElementById("delivery_info").style.display="block";
+    }, 4000);
+   
+    setTimeout(function(){
+        document.getElementById("new_add").style.display="block";
+    }, 24000);
+</script>
+
+<!-- <script>
+   function clickAndDisable(link) {
+     // disable subsequent clicks
+     link.onclick = function(event) {
+        event.preventDefault();
+     }
+   }  
+</script> -->
+
+        <script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBypGEylbI-CmyR6VWObQdtwwX-epET0A4",
+    authDomain: "saath-ee442.firebaseapp.com",
+    databaseURL: "https://saath-ee442.firebaseio.com",
+    projectId: "saath-ee442",
+    storageBucket: "gs://saath-ee442.appspot.com",
+    messagingSenderId: "964798793282"
+  };
+  firebase.initializeApp(config);
+ 
+    var database = firebase.database();
+window.onload = function(){
+    //have to make it grouped .. so getting email-msg combination is imp..
+    var messageRef = database.ref('delivery/');
+    //var hr = document.createElement("<hr>");
+    var i=1;
+    //alert("hello")
+   
+    messageRef.on('child_added',function(snapshot) {
+        var temp1,temp2,temp3,temp4,temp5;
+        var div1 = document.createElement('div');
+          var div2 = document.createElement('div');
+           var div3 = document.createElement('div');
+           var div4 = document.createElement('div');
+                  var div5 = document.createElement('div');
+                  var maindiv=document.createElement('div')
+        temp1=(JSON.parse(JSON.stringify(snapshot.val().quantity,null)));
+        //alert(temp1[0][0])
+        temp2=(JSON.parse(JSON.stringify(snapshot.val().donator,null)));
+         temp3=(JSON.parse(JSON.stringify(snapshot.val().mobile,null)));
+
+        temp4=(JSON.parse(JSON.stringify(snapshot.val().type,null)));
+         temp5=(JSON.parse(JSON.stringify(snapshot.val().address,null)));
+         div1.textContent(temp1)
+         div2.textContent(temp2)
+         div3.textContent(temp3)
+         div4.textContent(temp4)
+         div5.textContent(temp5)
+         maindiv.appendChild(div1)
+         maindiv.appendChild(div2)
+         maindiv.appendChild(div3)
+        maindiv.appendChild(div4)
+         maindiv.appendChild(div5)
+         document.getElementById("delivery_info").appendChild(maindiv)
+      //Do something with the data
+    
+
+ 
+    //   snapshot.forEach(function(childSnapshot) {
+    //       var childData = childSnapshot.val();
+    //       // alert(childData)
+    //       // alert(JSON.stringify(childData,null,2));
+    //        alert(childData);
+
+    //       // alert(childData.quantity);
+    //       // alert(childData.type);
+    //     var div5 = document.createElement('div');     
+    //       var div1 = document.createElement('div');
+    //       var div2 = document.createElement('div');
+    //       var div3 = document.createElement('div');
+    //       var div4 = document.createElement('div');
+          // if(i%4==1){
+          //      temp1=childData;
+          //     // div1.textContent="Donator: "+temp1;
+          //     // div5.appendChild(div1);
+          //     // document.getElementById("delivery_info").appendChild(div5);
+          //     //i=i+1;
+          // }
+          // if(i%4==2){
+          //     temp2=childData;
+          //     // div2.textContent="Delivery Personnel: "+;
+          //     // div5.appendChild(div2);
+          //     // document.getElementById("delivery_info").appendChild(div5);
+          //     // //i=i+1;
+          // }
+          // if(i%4==3){
+          //     temp3=childData;
+          //     // div3.textContent="Quantity: "+temp3;
+          //     // div5.appendChild(div3);
+          //     // document.getElementById("delivery_info").appendChild(div5);
+          //     // //i=i+1;
+          // }
+          // if(i%4==0){
+          //     temp4=childData;
+          //     // div4.textContent="Type: "+temp4;
+          //     // div5.appendChild(div4);
+          //     // document.getElementById("delivery_info").appendChild(div5);
+          //     // //i=i+1;
+          //     div1.textContent="donator: "+temp1;
+          //     div2.textContent="mobile: "+temp2;
+          //     div3.textContent="quantity: "+temp3;
+          //     div4.textContent="type: "+temp4;
+          //     div5.appendChild(div1);
+          //     div5.appendChild(div2);
+          //     div5.appendChild(div3);
+          //     div5.appendChild(div4);
+          //     document.getElementById("delivery_info").appendChild(div5);
+
+
+          //     div5.style.borderBottom = "2px solid black";
+          // }
+
+             
+                //alert(i);
+                          updateScroll();
+    });
+ // });
+}
+</script>
+
+   
+   
+
+    <script type="text/javascript">
+        function ngo_go_profile() {
+            // body...
+            window.location.replace("http://192.168.43.198:8000/ngo_profile")
+        }
+        // function ngo_go_contri() {
+        //     // body...
+        //     window.location.replace("http://192.168.42.118:8000/ngo_contri")
+        // }
+        // function ngo_go_donate() {
+        //     // body...
+        //     window.location.replace("http://192.168.42.118:8000/ngo_donate")
+        // }
+        function ngo_go_chat() {
+            // body...
+            window.location.replace("http://192.168.43.198:8000/chat")
+        }
+        function ngo_go_contact() {
+            // body...
+            window.location.replace("http://192.168.43.198:8000/contact_us")
+        }
+    </script>
+
+
+
+
+    <style type="text/css">
+        .top_menus{
+            margin-top: 10px;
+            height: 50px;
+            font-size: 25px;
+            width: 100%;
+        }
+        .top_menus_table{
+            width: 100%;
+            border: 4px solid black;
+            /*padding: 5px;*/
+            border-radius: 25%;
+        }
+        th{
+            padding: 15px 25px;
+               font-size: 24px;
+              text-align: center;
+              cursor: pointer;
+              outline: none;
+              color: #fff;
+              background-color: #4CAF50;
+              border: none;
+              border-radius: 15px;
+              box-shadow: 0 9px #999;
+              width: 10%;
+        }
+        th:hover{
+            background-color: #3e8e41
+        }
+        th:active{
+            background-color: #3e8e41;
+              box-shadow: 0 5px #666;
+              transform: translateY(4px);   
+        }
+        .user_info_area{
+            color: white;
+        }
+        a{
+            color: black;
+        }
+        a:hover{
+            color: red;
+        }
+        #user_image{
+            border-radius: 50%;
+            margin-left: 80px;
+            height: 100px;
+            width: 100px;
+            border: 1px solid black;
+            margin-left: 0px;
+        }
+        .column1{
+            margin-top: 50px;
+            width: 20%;
+            height: 100%;
+            background-color: #dddddd;
+            float: left;
+        }
+    .dropbtn {
+        background-color:  #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+    .dropbtn:hover,  {
+        background-color: #3e8e41;
+    }
+    .dropbtn:active{
+            background-color: #3e8e41;
+    }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 250px;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        /*width: 100%;*/
+    }
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown a:hover {background-color: #ddd;}
+    .show {display: block;}   
+        #col1_settings{
+            float: left;
+            border: 1px solid black;
+            color: black;
+        }
+        #col1_logout{
+            float: right;
+            border: 1px solid black;
+            color: black;
+        }
+        /*.vert_line{
+            border-left: 5px solid black;
+            height: 500px;
+            margin-left: 275px;
+            margin-top: 5px;
+        }*/
+        .horz_line{
+            border-top: 5px solid black;
+            margin-top: 50px;
+            width: 100%;
+        }
+        .top_img{
+            border-radius: 10%;
+        }
+    </style>
+    <title>Home_Page</title>
+</head>
+<body>
+    <div class="top_img"><img src="/static/banner.jpg" height="200px" width="100%"></div>
+
+    <div class="top_menus">
+        <table id="top_menus_table">
+            <tr>
+                <th name="profile" id="profile" class="dropbtn" onclick="myFunction()">
+                    <div class="dropdown">
+                        <!-- <button onclick="myFunction()" class="dropbtn">Profile</button> -->
+                          <div id="myDropdown" style="width: 200%" class="dropdown-content">
+
+                        <a href="#home"><p style="left: 10px;">WELCOME:
+                            <span id="user_email">
+                            {% for key in result %}
+                            {{ key[0] }}
+                            {% endfor %}
+                            </span>
+                            </p></a>
+                        <a href="#about"><img align="center" id="user_image" src="/static/user-image.jpg"></a>
+                        <a href="#Settings">Go to Settings</a>
+                        <br>
+                        <a href="http://192.168.43.198:8000/tologin">Logout</a>
+                    </div>
+                </div>
+                    <center>Profile</center>
+                </th>
+
+                <th name="chat" id="chat" onclick="ngo_go_chat()">Chat</th>
+                <th name="contact_us" id="contact_us" onclick="ngo_go_contact()">Contact Us</th>
+               
+            </tr>
+        </table>
+    </div>
+    <div class="horz_line"></div>
+    <div class="columns">
+
+  <script type="text/javascript">
+    function myfun()
+    {
+      // document.getElementById("sho").style.display="block";
+      // document.getElementById("ng").innerHtml='hello@gmail.com';
+      // document.getElementById("donato").innerHtml="donator@gmail.com";
+      window.location.replace("http://192.168.43.198:8000/review");
+    }
+  </script>
+<!--
+  <div id="sho" style="display: none;">
+    <span id="ng"></span>
+    <span id="donato"></span>
+  </div> -->
+       
+  <div id="delivery_info" style="width: 90%; overflow-y: scroll; display: none">
+    address : room no 71, aryabhata block, ramaiah boys hostel, mathikere<br>
+    donator : abcd@gmail.com<br>
+    mobile : mob1@gmail.com<br>
+    quantity : 44<br>
+    <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abcd@gmail.com" onclick="clickAndDisable(this);" style="float:right;padding-right:10px;">Feedback</a> -->
+    <input type="button" value="Feedback" onclick="myfun()" style="float:right;padding-right:10px;">
+    type: toys<br>
+    <hr>
+    address : room no 71, aryabhata block, ramaiah boys hostel, mathikere<br>
+    donator : abcd@gmail.com<br>
+    mobile :  mob1@gmail.com<br>
+    quantity : 5<br>
+     <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abcd@gmail.com" onclick="clickAndDisable(this);" style="float:right;padding-right:10px;">Feedback</a> -->
+    <input type="button" value="Feedback" onclick="myfun()" style="float:right;padding-right:10px;">
+    type: clothes<br>
+    <hr>
+    address : room no 71, aryabhata block, ramaiah boys hostel, mathikere<br>
+    donator : abcd@gmail.com<br>
+    mobile :  mobile@gmail.com<br>
+    quantity : 20<br>
+    <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abcd@gmail.com" onclick="clickAndDisable(this);" style="float:right;padding-right:10px;">Feedback</a> -->
+    <input type="button" value="Feedback" onclick="myfun()" style="float:right;padding-right:10px;">
+    type: food<br>
+    <hr    >
+    address : mathikere bengaluru<br>
+    donator : donator@gmail.com<br>
+    mobile :  mobile@gmail.com<br>
+    quantity : 9<br>
+    <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&to=donator@gmail.com" onclick="clickAndDisable(this);" style="float:right;padding-right:10px;">Feedback</a> -->
+    <input type="button" value="Feedback" onclick="myfun()" style="float:right;padding-right:10px;">
+    type: food<br>
+    <hr>
+    </div>
+    <div id="new_add" style="width: 90%;  overflow-y: scroll; display: none"onclick="myfun()" >
+    address: mathikere bengaluru<br>
+    donator : donator@gmail.com<br>
+    mobile :  mobile@gmail.com<br>
+    quantity : 1<br>
+    <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&to=donator@gmail.com" onclick="clickAndDisable(this);" style="float:right;padding-right:10px;">Feedback</a> -->
+    <input type="button" value="Feedback" onclick="myfun()" style="float:right;padding-right:10px;">
+    type: food<br>
+    <hr>
+    </div>
+</body>
+</html
+
+
+  
+  
+  

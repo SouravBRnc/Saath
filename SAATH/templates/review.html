@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+		<script>
+  		// Initialize Firebase
+  		var config = {
+    	apiKey: "AIzaSyBypGEylbI-CmyR6VWObQdtwwX-epET0A4",
+    	authDomain: "saath-ee442.firebaseapp.com",
+    	databaseURL: "https://saath-ee442.firebaseio.com",
+    	projectId: "saath-ee442",
+    	storageBucket: "gs://saath-ee442.appspot.com",
+   		messagingSenderId: "964798793282"
+  	};
+  	firebase.initializeApp(config);
+  
+  	var database = firebase.database();
+  	
+	function revi(){
+  	var satisfy = document.getElementById("satisfied").value;
+  	var tr= document.getElementById("try").value;
+  	var donat = "donator@gmail.com";
+  	var ng = "ngo@gmail.com";
+  	firebase.database().ref('/reviews').push({
+  		donator: donat,
+  		ngo: ng,
+  		satisfied: satisfy,
+  		try_again: tr
+  	});
+}
+</script>
+
+
+
+
+	<title>Review</title>
+
+
+
+		
+
+</head>
+<body>
+<div style="background-color: powderblue; height: 300px; width: 300px; margin-left: 300px; margin-top: 200px;">
+		<br>
+		How satisfied were you with the overall process?<br>
+		<select id="satisfied">
+			<option value="satisfied">Satisfied</option>
+			<option value="okayish">Okayish</option>
+			<option value="dissatisfied">Dis-satisfied</option>
+		</select>
+		<br>
+		<hr>
+		<br>
+		Will you give us another try?<br>
+		<select id="try">
+			<option value="yes">Yes</option>
+			<option value="maybe">Maybe</option>
+			<option value="no">No</option>
+		</select>
+		<br>
+		<button type="submit" name="review_form" value="SUBMIT REVIEW" onclick="revi()">SUBMIT</button>
+	</div>
+</body>
+</html>

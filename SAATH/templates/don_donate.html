@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		function verify(){
+			var qty = parseInt(document.getElementById("qty").value)
+			if(qty<=0){
+				alert("SORRY INVALID REQUEST!");
+				return;
+			}
+			window.location.replace("http://192.168.42.118:8000/donate")
+		}
+	</script>
+	<title>Donate</title>
+</head>
+<body>
+<div align="center" id="show_donate">
+	<form>
+		<fieldset>
+			<legend>DONATION INFORMATION</legend>
+			Type: <select>
+				<option name="type_food" id="type_food" selected>FOOD</option>
+				<option name="type_cloth" id="type_cloth">CLOTHES</option>
+				<option name="type_toys" id="type_toys">TOYS</option>
+			</select>
+			<br>
+			<input type="text" name="qty" id="qty" placeholder="approximate guess of the quantity..">
+			<br>
+			<button type="submit" onclick="verify()">SEND A PICKUP REQUEST</button>
+		</fieldset>
+	</form>
+</div>
+
+</body>
+</html>

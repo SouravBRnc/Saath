@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 
+
+
+	<script type="text/javascript">
+		function don() {
+			document.getElementById("all_users_table").style.display="none";
+			document.getElementById("donator").style.display="block";
+		}
+		function mob() {
+			document.getElementById("all_users_table").style.display="none";
+			document.getElementById("mobile").style.display="block";
+		}
+		function ngo() {
+			document.getElementById("all_users_table").style.display="none";
+			document.getElementById("ngo").style.display="block";
+		}
+	</script>
+<style type="text/css">
+	form{
+		background-color: powderblue;
+		width: 50%;
+		margin-left: 400px;
+		margin-top: 50px;
+	}
+
+	hr{
+		width: 50%;
+		margin-left: 400px;
+	}
+	#don_jpg{
+		border-radius: 50%;
+		height: 200px;
+		width: 200px;
+	}
+
+	#mob_jpg{
+		border-radius: 50%;
+		height: 200px;
+		width: 200px;
+	}
+
+	#ngo_jpg{
+		border-radius: 50%;
+		height: 200px;
+		width: 200px;
+	}
+
+	img{
+		height: 200
+	}
+
+	</style>
+
+	<title>LOGIN_SIGNUP</title>
+</head>
+<body>
+	<div class="all_users" id="all_users">
+	<center><table id="all_users_table" style="padding: 120px;">
+		<th style="padding: 100px;">
+		<img id="don_jpg" src="/static/don.jpg" onclick="don()"></th>
+		<th style="padding:100px;">
+		<img src="/static/mob.jpg" id="mob_jpg" onclick="mob()"></th>
+		<th style="padding: 100px;"><img src="/static/ngo.jpg" id="ngo_jpg" onclick="ngo()"></th>
+	</table>
+</center>
+		<div id="donator" class="col1" style="display: none;">
+			<form action="http://192.168.43.198:8000/donlogin" method="POST">
+				<fieldset>
+					<legend>LOGIN</legend>
+					<br>
+					e-mail:
+					<br>
+					<input type="email" name="don_email1" required placeholder="e-mail">
+					<br>
+					password:
+					<br>
+					<input type="password" name="don_password1" placeholder="password" required>
+					<br>
+					<button type="submit">LOGIN</button>	
+				</fieldset>
+			</form>
+			<br>
+			<hr>
+			<br>
+			<form action="http://192.168.43.198:8000/donsignup" method="POST">
+				<fieldset>
+					<legend>SIGNUP</legend>
+					<br>
+					e-mail:
+					<br>
+					<input type="email" name="don_email2" required placeholder="e-mail">
+					<br>
+					password:
+					<br>
+					<input type="password" name="don_password2" placeholder="password" required>
+					<br>
+					<br>
+					Address:<br>
+					<input type="text" name="address" placeholder="address" required>
+					<br>
+					<br>
+					Contact:<br>
+					<input type="text" name="contact" placeholder="contact number" required>
+					<br>
+					<br>
+					<button type="submit">SIGNUP</button>	
+				</fieldset>
+			</form>
+		</div>
+		<div id="mobile" class="col2" style="display: none;">
+			<form action="http://192.168.43.198:8000/moblogin" method="POST">
+				<fieldset>
+					<legend>LOGIN</legend>
+					<br>
+					e-mail:
+					<br>
+					<input type="email" name="mob_email1" required placeholder="e-mail">
+					<br>
+					password:
+					<br>
+					<input type="password" name="mob_password1" placeholder="password" required>
+					<br>
+					<button type="submit">LOGIN</button>	
+				</fieldset>
+			</form>
+			<br>
+			<hr>
+			<br>
+			<form action="http://192.168.43.198:8000/mobsignup" method="POST">
+				<fieldset>
+					<legend>SIGNUP</legend>
+					<br>
+					e-mail:
+					<br>
+					<input type="email" name="mob_email2" required placeholder="e-mail">
+					<br>
+					password:
+					<br>
+					<input type="password" name="mob_password2" placeholder="password" required>
+					<br>
+					<br>
+					contact:<br>
+					<input type="text" name="contact" placeholder="contact" required>
+					<br>
+					<br>
+					<button type="submit">SIGNUP</button>	
+				</fieldset>
+			</form>
+		</div>
+		<div id="ngo" class="col3" style="display: none;">
+			<form action="http://192.168.43.198:8000/ngologin" method="POST">
+				<fieldset>
+					<legend>LOGIN</legend>
+					<br>
+					e-mail:
+					<br>
+					<input type="email" name="ngo_email1" required placeholder="e-mail">
+					<br>
+					password:
+					<br>
+					<input type="password" name="ngo_password1" placeholder="password" required>
+					<br>
+					<button type="submit">LOGIN</button>	
+				</fieldset>
+			</form>
+			<br>
+			<hr>
+			<br>
+			<form action="http://192.168.43.198:8000/ngosignup" method="POST">
+				<fieldset>
+					<legend>SIGNUP</legend>
+					<br>
+					e-mail:
+					<br>
+					<input type="email" name="ngo_email2" required placeholder="e-mail">
+					<br>
+					password:
+					<br>
+					<input type="password" name="ngo_password2" placeholder="password" required>
+					<br>
+					<br>
+					Address:<br>
+					<input type="text" name="address" placeholder="address" required>
+					<br>
+					<br>
+					Contact:<br>
+					<input type="text" name="contact" placeholder="contact number" required>
+					<br>
+					<br>
+					<button type="submit">SIGNUP</button>	
+				</fieldset>
+			</form>
+		</div>
+ </body>
+</html>
